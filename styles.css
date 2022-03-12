@@ -1,0 +1,60 @@
+body{
+    display: flex;
+    align-items: center;
+    background-color: gray;
+    flex-direction: column-reverse;
+}
+
+
+#container{
+    background-color: black;
+    max-height: 420px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+#display{
+    background-color: lightgray;
+    min-width: 100px;
+    min-height: 75px;
+    margin: 16px;
+
+}
+
+#buttons{
+    display: flex;
+    margin: 16px;
+    gap: 16px;
+    height: 100vh;
+    
+}
+
+#buttons-left{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: blue;
+    justify-content: space-evenly;
+    gap:5px;
+    max-width: 220px;
+    
+   
+
+}
+
+#buttons-right{
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    justify-content: space-evenly;
+    
+}
+
+.button{
+    min-height: 50px;
+    min-width: 50px;
+    max-height: 35px;
+    margin: 7px;
+    font-weight:10;
+}
