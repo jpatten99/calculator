@@ -20,6 +20,9 @@ body{
     min-width: 100px;
     min-height: 75px;
     margin: 16px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
 }
 
