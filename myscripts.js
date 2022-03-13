@@ -4,6 +4,8 @@ let operatorClicked = false;
 let operator = '';
 let runningTotal = 0;
 let equalClicked = false;
+let cleared = true;
+let op2Clearer = true;
 
 const display = document.getElementById('display');
 if(operand1===''){
@@ -37,63 +39,119 @@ function operate(operator, op1, op2){
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
     button.addEventListener('click', () =>{
-        switch(button.id){
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-                if(!operatorClicked){
-                    operand1+=button.id;
-                    if(operand1 !== '0') operand1 = operand1.replace(/^0+/, '');
-                    console.log(operand1);
-                }
-                else{
-                    operand2 += button.id;
-                    if(operand2 !== '0') operand2 = operand2.replace(/^0+/, '');
-                    console.log(operand2);
-                }
-                if(operand1){
-                    document.getElementById("+").disabled = false;
-                    document.getElementById("-").disabled = false;
-                    document.getElementById("*").disabled = false;
-                    document.getElementById("/").disabled = false;
-                }
-                if(operand2){document.getElementById("=").disabled = false;}
-                break;
-            case '+':
-            case '-':    
-            case '*':
-            case '/':
-                operatorClicked = true;
-                operator = button.id;
-                break;
-            case '=':
-                equalClicked = true;
-                runningTotal = operate(operator, operand1, operand2);
-                display.textContent = operate(operator, operand1, operand2);       
-                break;    
-            case 'CLR':
-                operand1 = '';
-                operand2 = '';
-                operatorClicked = false;
-                operator = '';
-                runningTotal = 0;
-                equalClicked = false;
-                document.getElementById("+").disabled = true;
-                document.getElementById("-").disabled = true;
-                document.getElementById("*").disabled = true;
-                document.getElementById("/").disabled = true;
-                document.getElementById("=").disabled = true;
-                
+        if(cleared){
+            switch(button.id){
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    if(!operatorClicked){
+                        operand1+=button.id;
+                        if(operand1 !== '0') operand1 = operand1.replace(/^0+/, '');
+                        console.log(operand1);
+                    }
+                    else{
+                        operand2 += button.id;
+                        if(operand2 !== '0') operand2 = operand2.replace(/^0+/, '');
+                        console.log(operand2);
+                    }
+                    if(operand1){
+                        document.getElementById("+").disabled = false;
+                        document.getElementById("-").disabled = false;
+                        document.getElementById("*").disabled = false;
+                        document.getElementById("/").disabled = false;
+                    }
+                    if(operand2){document.getElementById("=").disabled = false;}
+                    
+                    break;
+                case '+':
+                case '-':    
+                case '*':
+                case '/':
+                    operatorClicked = true;
+                    operator = button.id;
+                    break;
+                case '=':
+                    equalClicked = true;
+                    runningTotal = operate(operator, operand1, operand2);
+                    display.textContent = operate(operator, operand1, operand2);    
+                    cleared = false;   
+                    break;    
+                case 'CLR':
+                    operand1 = '';
+                    operand2 = '';
+                    operatorClicked = false;
+                    operator = '';
+                    runningTotal = 0;
+                    equalClicked = false;
+                    document.getElementById("+").disabled = true;
+                    document.getElementById("-").disabled = true;
+                    document.getElementById("*").disabled = true;
+                    document.getElementById("/").disabled = true;
+                    document.getElementById("=").disabled = true;
+                    cleared = true;
+                    
+            }
+            if(!equalClicked){display.textContent = operand1 + operator + operand2;}
+            
         }
-        if(!equalClicked){display.textContent = operand1 + operator + operand2;}
-
+        else{
+            operand1 = runningTotal;
+            if(op2Clearer)operand2 = '';
+            
+            console.log('op1:' + operand1);
+            console.log('op2:' + operand2);
+            switch(button.id){
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                        operand2 += button.id;
+                        if(operand2 !== '0') operand2 = operand2.replace(/^0+/, '');
+                        console.log(button.id);
+                        op2Clearer=false;
+                        break;
+                case '+':
+                case '-':    
+                case '*':
+                case '/':
+                    operatorClicked = true;
+                    operator = button.id;
+                    break;
+                case '=':
+                    equalClicked = true;
+                    runningTotal = operate(operator, operand1, operand2);
+                    display.textContent = operate(operator, operand1, operand2);  
+                    op2Clearer = true;     
+                    break;    
+                case 'CLR':
+                    operand1 = '';
+                    operand2 = '';
+                    operatorClicked = false;
+                    operator = '';
+                    runningTotal = 0;
+                    equalClicked = false;
+                    document.getElementById("+").disabled = true;
+                    document.getElementById("-").disabled = true;
+                    document.getElementById("*").disabled = true;
+                    document.getElementById("/").disabled = true;
+                    document.getElementById("=").disabled = true;
+                    display.textContent = '';
+                    cleared = true;
+            }
+        }
        /*
         //checks if any operator is clicked, if so set flag and assign it to operator variable
         if(button.id === '+' || button.id === '-' || button.id === '*' || button.id === '/'){
