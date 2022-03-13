@@ -6,7 +6,7 @@ let runningTotal = 0;
 let equalClicked = false;
 let cleared = true;
 let op2Clearer = true;
-
+let isBroken = false;
 const display = document.getElementById('display');
 if(operand1===''){
     document.getElementById("+").disabled = true;
@@ -78,6 +78,28 @@ buttons.forEach((button) => {
                     operator = button.id;
                     break;
                 case '=':
+                    if(operator === '/' && operand2 === '0'){
+                        operand1 = '';
+                        operand2 = '';
+                        operatorClicked = false;
+                        operator = '';
+                        runningTotal = 0;
+                        equalClicked = false;
+                        document.getElementById("+").disabled = true;
+                        document.getElementById("-").disabled = true;
+                        document.getElementById("*").disabled = true;
+                        document.getElementById("/").disabled = true;
+                        document.getElementById("=").disabled = true;
+                        cleared = true;
+                        display.textContent ='%$#&%#&#%&%#&^#$&%$#%&%#$&%';
+                        var img = document.createElement("img");
+                        img.src = "https://i.kym-cdn.com/entries/icons/original/000/023/967/obiwan.jpg";
+                        img.id = "img1";
+                        var src = document.getElementById("header");
+                        src.appendChild(img);
+                        isBroken = true;
+                        break;
+                    } 
                     equalClicked = true;
                     runningTotal = operate(operator, operand1, operand2);
                     display.textContent = operate(operator, operand1, operand2);    
@@ -95,13 +117,16 @@ buttons.forEach((button) => {
                     document.getElementById("*").disabled = true;
                     document.getElementById("/").disabled = true;
                     document.getElementById("=").disabled = true;
+                    const list = document.getElementById("header");
+                    list.removeChild(list.firstChild);
                     cleared = true;
+                    break;
                     
             }
-            if(!equalClicked){display.textContent = operand1 + operator + operand2;}
-            
+            if(!equalClicked && !isBroken){display.textContent = operand1 + operator + operand2;}
         }
         else{
+            equalClicked = false;
             operand1 = runningTotal;
             if(op2Clearer)operand2 = '';
             
@@ -131,6 +156,28 @@ buttons.forEach((button) => {
                     operator = button.id;
                     break;
                 case '=':
+                    if(operator === '/' && operand2 === '0'){
+                        operand1 = '';
+                        operand2 = '';
+                        operatorClicked = false;
+                        operator = '';
+                        runningTotal = 0;
+                        equalClicked = false;
+                        document.getElementById("+").disabled = true;
+                        document.getElementById("-").disabled = true;
+                        document.getElementById("*").disabled = true;
+                        document.getElementById("/").disabled = true;
+                        document.getElementById("=").disabled = true;
+                        cleared = true;
+                        display.textContent ='%$#&%#&#%&%#&^#$&%$#%&%#$&%';
+                        var img = document.createElement("img");
+                        img.src = "https://i.kym-cdn.com/entries/icons/original/000/023/967/obiwan.jpg";
+                        img.id = "img1";
+                        var src = document.getElementById("header");
+                        src.appendChild(img);
+                        isBroken = true;
+                        break;
+                    } 
                     equalClicked = true;
                     runningTotal = operate(operator, operand1, operand2);
                     display.textContent = operate(operator, operand1, operand2);  
@@ -149,9 +196,14 @@ buttons.forEach((button) => {
                     document.getElementById("/").disabled = true;
                     document.getElementById("=").disabled = true;
                     display.textContent = '';
+                    const list = document.getElementById("header");
+                    list.removeChild(list.firstChild);
                     cleared = true;
             }
+            if(!equalClicked&& !isBroken){display.textContent = operand1 + operator + operand2;}
         }
+        isBroken = false;
+
        /*
         //checks if any operator is clicked, if so set flag and assign it to operator variable
         if(button.id === '+' || button.id === '-' || button.id === '*' || button.id === '/'){
@@ -199,7 +251,3 @@ buttons.forEach((button) => {
     });
     
 });
-
-function test(){
-
-}
